@@ -3,7 +3,7 @@
 
 Insertion(int *data, int n){
     int i, j, tmp;
-    for(i=1; i<n; i++){
+    for(i=0; i<n; i++){
         j=i-1;
         tmp=*(data+i);
         while((j>=0) && (tmp<*(data+j))){
@@ -14,40 +14,136 @@ Insertion(int *data, int n){
     }
 }
 
-Bubble(int *data2, int n){
+Bubble(int *data, int n){
     int i, j, tmp;
     for(i=0; i<n-1; i++){
         for(j=0; j<n-i-1; j++){
-            if(*(data2+j)>*(data2+(j+1))){
-                tmp=*(data2+j);
-                *(data2+j)=*(data2+(j+1));
-                *(data2+(j+1))=tmp;
+            if(*(data+j)>*(data+(j+1))){
+                tmp=*(data+j);
+                *(data+j)=*(data+(j+1));
+                *(data+(j+1))=tmp;
             }
         }
     }
 }
 
-int main(){
-    int *data, *data2, i, n;
-    scanf("%d",&n);
-    data=(int *)malloc(n*sizeof(int));
-    data2=(int *)malloc(n*sizeof(int));
-
-    for(i=0; i<n; i++){
-        scanf("%d",&*(data+i));
-        *(data2+i)=*(data+i);
+Select(int *data, int n){
+    int i, j, tmp, min, minid;
+    for(i=0; i<n-1; i++){
+        min=*(data+i);
+        tmp=*(data+i);
+        minid=i;
+        for(j=i+1; j<n; j++){
+            if(min>*(data+j)){
+                min=*(data+j);
+                minid=j;
+            }
+        }
+        *(data+i)=*(data+minid);
+        *(data+minid)=tmp;
+        minid=i+1;
     }
+}
 
-    Insertion(data,n);
-    Bubble(data2,n);
+Quick(int *data, int left, int right){
+    int i, j, tmp, pivo;
+    i=left;
+    j=right;
+    pivo=*(data+((left+right)/2));
+    do{
+        while(*(data+i)<pivo){
+            i++;
+        }
+        while(pivo<*(data+j)){
+            j--;
+        }
+        if(i<=j){
+            tmp=*(data+i);
+            *(data+i)=*(data+j);
+            *(data+j)=tmp;
+            i++;
+            j--;
+        }
+    }while(i<=j);
+    if(left<j){
+        Quick(data,left,j);
+    }
+    if(i<right){
+        Quick(data,i,right);
+    }
+}
 
-    for(i=0; i<n; i++){
-        printf("%d ",*(data+i));
+Imprime(int *data, int n){
+    int i;
+    printf("%d",*(data+0));
+    for(i=1; i<n; i++){
+        printf(" %d",*(data+i));
     }
     printf("\n");
-    for(i=0; i<n; i++){
-        printf("%d ",*(data2+i));
-    }
+}
 
+int main(){
+    int *data, n, op, i;
+    for(;;){
+        printf("Menu\n\t1.Ordenar com InsertionSort\n\t2.Ordenar com SelectSort\n\t3.Ordenar com BubbleSort\n\t4.Ordenar com QuickSort\n\t5.Sair\nOpcao ");
+        scanf("%d",&op);
+        if(op<6 && op>0)
+        switch(op){
+            case 1:
+            printf("Quantidade de elementos: ");
+            scanf("%d",&n);
+            data=(int *)malloc(n*sizeof(int));
+            printf("Elementos: ");
+            for(i=0; i<n; i++){
+                scanf("%d",&*(data+i));
+            }
+            Insertion(data,n);
+            Imprime(data,n);
+            free(data);
+            break;
+
+            case 2:
+            printf("Quantidade de elementos: ");
+            scanf("%d",&n);
+            data=(int *)malloc(n*sizeof(int));
+            printf("Elementos: ");
+            for(i=0; i<n; i++){
+                scanf("%d",&*(data+i));
+            }
+            Select(data,n);
+            Imprime(data,n);
+            free(data);
+            break;
+
+            case 3:
+            printf("Quantidade de elementos: ");
+            scanf("%d",&n);
+            data=(int *)malloc(n*sizeof(int));
+            printf("Elementos: ");
+            for(i=0; i<n; i++){
+                scanf("%d",&*(data+i));
+            }
+            Bubble(data,n);
+            Imprime(data,n);
+            free(data);
+            break;
+
+            case 4:
+            printf("Quantidade de elementos: ");
+            scanf("%d",&n);
+            data=(int *)malloc(n*sizeof(int));
+            printf("Elementos: ");
+            for(i=0; i<n; i++){
+                scanf("%d",&*(data+i));
+            }
+            Quick(data,-1,n);
+            Imprime(data,n);
+            break;
+
+            case 5:
+            exit(0);
+            break;
+        }
+    }
     return 0;
 }

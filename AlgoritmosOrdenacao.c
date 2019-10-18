@@ -3,7 +3,7 @@
 
 Insertion(int *data, int n){
     int i, j, tmp;
-    for(i=0; i<n; i++){
+    for(i=1; i<n; i++){
         j=i-1;
         tmp=*(data+i);
         while((j>=0) && (tmp<*(data+j))){

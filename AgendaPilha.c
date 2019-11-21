@@ -78,11 +78,11 @@ int main(){
                 reset(p);
                 break;
             case 7:
+                clear(p);
                 exit(0);
                 break;
         }
     }
-    clear(p);
     return 0;
 }
 

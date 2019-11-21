@@ -129,13 +129,13 @@ void listar(fila *f){
     for(percorre=f->first; percorre!=NULL; percorre=percorre->next){
         printf("Nome: %s\tTel: %d\n",percorre->c.nome,percorre->c.tel);
     }
+    
     free(percorre);
 }
 
 void clear(fila *f){
-    if(empty(f)){
+    if(empty(f))
         return;
-    }
     else{
         pop(f);
         clear(f);

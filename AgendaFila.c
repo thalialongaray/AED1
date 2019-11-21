@@ -67,6 +67,8 @@ int main(){
                 break;
         }
     }
+    clear(f);
+    free(f);
     return 0;
 }
 

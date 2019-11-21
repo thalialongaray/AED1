@@ -63,12 +63,12 @@ int main(){
                 printf("Agenda limpa\n");
                 break;
             case 6:
+                clear(f);
+                free(f);
                 exit(0);
                 break;
         }
     }
-    clear(f);
-    free(f);
     return 0;
 }
 
